@@ -25,10 +25,10 @@ COPY playedu-api /app
 WORKDIR /app
 
 # 下载依赖项
-RUN /app/mvnw dependency:go-offline
+# RUN /app/mvnw dependency:go-offline
 
-# 复制剩余项目
-COPY playedu-api /app
+# # 复制剩余项目
+# COPY playedu-api /app
 
 # 构建 Java 项目
 RUN /app/mvnw -Dmaven.test.skip=true clean package
