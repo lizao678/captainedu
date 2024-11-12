@@ -2,19 +2,19 @@
 FROM registry.cn-hangzhou.aliyuncs.com/hzbs/node:20-alpine AS node-builder
 
 # 复制前端代码
-COPY playedu-admin /app/admin
-COPY playedu-pc /app/pc
-COPY playedu-h5 /app/h5
+# COPY playedu-admin /app/admin
+# COPY playedu-pc /app/pc
+# COPY playedu-h5 /app/h5
 
 # 构建过程：只在开发环境执行 dev，生产环境运行 build
-WORKDIR /app/admin
-RUN pnpm i && VITE_APP_URL=/api/ pnpm build
+# WORKDIR /app/admin
+# RUN pnpm i && VITE_APP_URL=/api/ pnpm build
 
-WORKDIR /app/pc
-RUN pnpm i && VITE_APP_URL=/api/ pnpm build
+# WORKDIR /app/pc
+# RUN pnpm i && VITE_APP_URL=/api/ pnpm build
 
-WORKDIR /app/h5
-RUN pnpm i && VITE_APP_URL=/api/ pnpm build
+# WORKDIR /app/h5
+# RUN pnpm i && VITE_APP_URL=/api/ pnpm build
 
 # Java构建阶段
 FROM registry.cn-hangzhou.aliyuncs.com/hzbs/eclipse-temurin:17 AS java-builder
@@ -39,9 +39,9 @@ FROM registry.cn-hangzhou.aliyuncs.com/hzbs/eclipse-temurin:17 AS base
 # 从构建阶段复制 Java 和 Node 构建的文件
 COPY --from=java-builder /app/playedu-api/target/playedu-api.jar /app/api/app.jar
 
-COPY --from=node-builder /app/admin/dist /app/admin
-COPY --from=node-builder /app/pc/dist /app/pc
-COPY --from=node-builder /app/h5/dist /app/h5
+# COPY --from=node-builder /app/admin/dist /app/admin
+# COPY --from=node-builder /app/pc/dist /app/pc
+# COPY --from=node-builder /app/h5/dist /app/h5
 
 # Nginx 配置
 COPY docker/nginx/conf/nginx.conf /etc/nginx/sites-enabled/default
