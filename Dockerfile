@@ -20,15 +20,9 @@ RUN pnpm i && VITE_APP_URL=/api/ pnpm build
 FROM registry.cn-hangzhou.aliyuncs.com/hzbs/eclipse-temurin:17 AS java-builder
 
 # 复制后端代码
-COPY playedu-api /app
+COPY playedu-server /app
 
 WORKDIR /app
-
-# 下载依赖项
-# RUN /app/mvnw dependency:go-offline
-
-# # 复制剩余项目
-# COPY playedu-api /app
 
 # 构建 Java 项目
 RUN /app/mvnw -Dmaven.test.skip=true clean package
