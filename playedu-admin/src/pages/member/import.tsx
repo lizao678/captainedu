@@ -1,7 +1,7 @@
 import { useState } from "react";
 import * as XLSX from "xlsx";
 import { Row, Col, Button, Upload, message } from "antd";
-import { BackBartment } from "../../compenents";
+import { BackBartment } from "../../components";
 import { user } from "../../api/index";
 import { useNavigate } from "react-router-dom";
 import { getHost } from "../../utils/index";

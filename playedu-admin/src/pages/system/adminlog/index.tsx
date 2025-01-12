@@ -3,7 +3,7 @@ import { Table, Typography, Input, Button, DatePicker } from "antd";
 import { adminLog } from "../../../api";
 import type { ColumnsType } from "antd/es/table";
 import { dateWholeFormat, transUtcTime } from "../../../utils/index";
-import { AdminLogDetailDialog } from "./compenents/detail-dialog";
+import { AdminLogDetailDialog } from "./components/detail-dialog";
 const { RangePicker } = DatePicker;
 import moment from "moment";
 

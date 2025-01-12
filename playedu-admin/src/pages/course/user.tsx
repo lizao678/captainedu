@@ -13,9 +13,9 @@ import {
 import { course as Course } from "../../api";
 import { useParams, useLocation } from "react-router-dom";
 import type { ColumnsType } from "antd/es/table";
-import { BackBartment } from "../../compenents";
+import { BackBartment } from "../../components";
 import { ExclamationCircleFilled } from "@ant-design/icons";
-import { PerButton } from "../../compenents";
+import { PerButton } from "../../components";
 import { dateFormat } from "../../utils/index";
 
 const { confirm } = Modal;

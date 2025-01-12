@@ -13,7 +13,7 @@ import {
   SystemConfigStoreInterface,
   saveConfigAction,
 } from "../../store/system/systemConfigSlice";
-import { Footer } from "../../compenents/footer";
+import { Footer } from "../../components/footer";
 
 const LoginPage = () => {
   const dispatch = useDispatch();

@@ -15,10 +15,10 @@ import { useLocation } from "react-router-dom";
 import { DownOutlined, ExclamationCircleFilled } from "@ant-design/icons";
 import type { ColumnsType } from "antd/es/table";
 import { dateFormat } from "../../../utils/index";
-import { TreeCategory, DurationText } from "../../../compenents";
-import { UploadVideoButton } from "../../../compenents/upload-video-button";
-import { VideoPlayDialog } from "./compenents/video-play-dialog";
-import { VideosUpdateDialog } from "./compenents/update-dialog";
+import { TreeCategory, DurationText } from "../../../components";
+import { UploadVideoButton } from "../../../components/upload-video-button";
+import { VideoPlayDialog } from "./components/video-play-dialog";
+import { VideosUpdateDialog } from "./components/update-dialog";
 
 const { confirm } = Modal;
 

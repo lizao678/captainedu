@@ -5,9 +5,9 @@ import type { ColumnsType } from "antd/es/table";
 import { PlusOutlined, ExclamationCircleFilled } from "@ant-design/icons";
 import { adminRole } from "../../../api/index";
 import { dateFormat } from "../../../utils/index";
-import { SystemAdminrolesCreate } from "./compenents/create";
-import { SystemAdminrolesUpdate } from "./compenents/update";
-import { PerButton } from "../../../compenents";
+import { SystemAdminrolesCreate } from "./components/create";
+import { SystemAdminrolesUpdate } from "./components/update";
+import { PerButton } from "../../../components";
 
 const { confirm } = Modal;
 

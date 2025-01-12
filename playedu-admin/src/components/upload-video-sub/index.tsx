@@ -3,7 +3,7 @@ import { Row, Col, Empty, Table, Spin, Typography, Input, Button } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import { resource } from "../../api";
 import styles from "./index.module.less";
-import { TreeCategory } from "../../compenents";
+import { DurationText, TreeCategory } from "../../components";
 
 interface VideoItem {
   id: number;
@@ -36,12 +36,12 @@ interface PropsInterface {
   onSelected: (arr: any[], videos: []) => void;
 }
 
-export const UploadCoursewareSub = (props: PropsInterface) => {
+export const UploadVideoSub = (props: PropsInterface) => {
   const [init, setInit] = useState(true);
   const [category_ids, setCategoryIds] = useState<any>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [videoList, setVideoList] = useState<VideoItem[]>([]);
-  const [existingTypes, setExistingTypes] = useState<any>([]);
+  const [videosExtra, setVideoExtra] = useState<any>([]);
   const [refresh, setRefresh] = useState(false);
   const [page, setPage] = useState(1);
   const [size, setSize] = useState(10);
@@ -66,18 +66,10 @@ export const UploadCoursewareSub = (props: PropsInterface) => {
     setLoading(true);
     let categoryIds = category_ids.join(",");
     resource
-      .resourceList(
-        page,
-        size,
-        "",
-        "",
-        title,
-        "WORD,EXCEL,PPT,PDF,TXT,RAR,ZIP",
-        categoryIds
-      )
+      .resourceList(page, size, "", "", title, "VIDEO", categoryIds)
       .then((res: any) => {
         setTotal(res.data.result.total);
-        setExistingTypes(res.data.existing_types);
+        setVideoExtra(res.data.videos_extra);
         setVideoList(res.data.result.data);
         setLoading(false);
         setInit(false);
@@ -113,11 +105,11 @@ export const UploadCoursewareSub = (props: PropsInterface) => {
 
   const columns: ColumnsType<DataType> = [
     {
-      title: "课件",
+      title: "视频",
       render: (_, record: any) => (
         <div className="d-flex">
           <i
-            className="iconfont icon-icon-file"
+            className="iconfont icon-icon-video"
             style={{
               fontSize: 14,
               color: "rgba(0,0,0,0.3)",
@@ -128,8 +120,14 @@ export const UploadCoursewareSub = (props: PropsInterface) => {
       ),
     },
     {
-      title: "类型",
-      render: (_, record: any) => <span>{record.type}</span>,
+      title: "时长",
+      render: (_, record: any) => (
+        <div>
+          <DurationText
+            duration={videosExtra[record.id].duration}
+          ></DurationText>
+        </div>
+      ),
     },
   ];
 
@@ -145,6 +143,7 @@ export const UploadCoursewareSub = (props: PropsInterface) => {
               name: row[i].name,
               type: row[i].type,
               rid: row[i].id,
+              duration: videosExtra[row[i].id].duration,
             });
           }
         }
@@ -161,15 +160,7 @@ export const UploadCoursewareSub = (props: PropsInterface) => {
     <>
       <Row style={{ width: 752, minHeight: 520 }}>
         <Col span={7}>
-          {init && (
-            <div className="float-left text-center mt-30">
-              <Spin></Spin>
-            </div>
-          )}
-          <div
-            className="float-left"
-            style={{ display: init ? "none" : "block" }}
-          >
+          <div className="float-left">
             <TreeCategory
               selected={[]}
               type="no-cate"
@@ -223,7 +214,7 @@ export const UploadCoursewareSub = (props: PropsInterface) => {
           >
             {videoList.length === 0 && (
               <Col span={24} style={{ marginTop: 150 }}>
-                <Empty description="暂无课件" />
+                <Empty description="暂无视频" />
               </Col>
             )}
             {videoList.length > 0 && (

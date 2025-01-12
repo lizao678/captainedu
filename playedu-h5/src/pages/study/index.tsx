@@ -4,7 +4,7 @@ import { sleep } from "antd-mobile/es/utils/sleep";
 import styles from "./index.module.scss";
 import { course } from "../../api/index";
 import { Empty } from "../../components";
-import { CoursesModel } from "./compenents/courses-model";
+import { CoursesModel } from "./components/courses-model";
 import moment from "moment";
 
 const StudyPage = () => {

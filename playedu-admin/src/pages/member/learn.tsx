@@ -2,12 +2,12 @@ import { useState, useEffect, useRef } from "react";
 import styles from "./learn.module.less";
 import { Row, Image, Table, Button, Select } from "antd";
 import { useLocation, useNavigate } from "react-router-dom";
-import { BackBartment, DurationText } from "../../compenents";
+import { BackBartment, DurationText } from "../../components";
 import { dateFormat } from "../../utils/index";
 import { user as member } from "../../api/index";
 import * as echarts from "echarts";
 import type { ColumnsType } from "antd/es/table";
-import { MemberLearnProgressDialog } from "./compenents/progress";
+import { MemberLearnProgressDialog } from "./components/progress";
 
 interface DataType {
   id: React.Key;

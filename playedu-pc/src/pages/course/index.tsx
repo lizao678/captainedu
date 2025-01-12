@@ -4,8 +4,8 @@ import styles from "./index.module.scss";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { course as Course } from "../../api/index";
 import mediaIcon from "../../assets/images/commen/icon-medal.png";
-import { HourCompenent } from "./compenents/hour";
-import { Empty } from "../../compenents";
+import { HourCompenent } from "./components/hour";
+import { Empty } from "../../components";
 import iconRoute from "../../assets/images/commen/icon-route.png";
 
 type TabModel = {

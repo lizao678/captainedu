@@ -7,7 +7,7 @@ import icon from "../../assets/images/dashboard/icon-more.png";
 import iconN1 from "../../assets/images/dashboard/icon-n1.png";
 import iconN2 from "../../assets/images/dashboard/icon-n2.png";
 import iconN3 from "../../assets/images/dashboard/icon-n3.png";
-import { Footer } from "../../compenents/footer";
+import { Footer } from "../../components/footer";
 import { dashboard } from "../../api/index";
 import { timeFormat } from "../../utils/index";
 import * as echarts from "echarts";

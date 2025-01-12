@@ -22,9 +22,9 @@ import { user } from "../../api/index";
 import { dateFormat } from "../../utils/index";
 import { Link, useLocation, useSearchParams } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { TreeDepartment, PerButton } from "../../compenents";
-import { MemberCreate } from "./compenents/create";
-import { MemberUpdate } from "./compenents/update";
+import { TreeDepartment, PerButton } from "../../components";
+import { MemberCreate } from "./components/create";
+import { MemberUpdate } from "./components/update";
 const { confirm } = Modal;
 
 interface DataType {

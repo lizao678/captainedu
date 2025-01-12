@@ -14,8 +14,8 @@ import { useLocation } from "react-router-dom";
 import { ExclamationCircleFilled } from "@ant-design/icons";
 import type { ColumnsType } from "antd/es/table";
 import { dateFormat } from "../../../utils/index";
-import { TreeCategory, UploadCoursewareButton } from "../../../compenents";
-import { CoursewareUpdateDialog } from "./compenents/update-dialog";
+import { TreeCategory, UploadCoursewareButton } from "../../../components";
+import { CoursewareUpdateDialog } from "./components/update-dialog";
 
 const { confirm } = Modal;
 

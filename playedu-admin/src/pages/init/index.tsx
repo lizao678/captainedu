@@ -5,7 +5,7 @@ import {
   SystemConfigStoreInterface,
   saveConfigAction,
 } from "../../store/system/systemConfigSlice";
-import { UploadVideoFloatButton } from "../../compenents/upload-video-float-button";
+import { UploadVideoFloatButton } from "../../components/upload-video-float-button";
 
 interface Props {
   loginData?: any;

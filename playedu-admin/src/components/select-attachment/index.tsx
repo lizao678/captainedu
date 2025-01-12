@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Row, Modal, Tabs } from "antd";
 import styles from "./index.module.less";
-import { UploadCoursewareSub } from "../../compenents";
+import { UploadCoursewareSub } from "../../components";
 import type { TabsProps } from "antd";
 
 interface PropsInterface {

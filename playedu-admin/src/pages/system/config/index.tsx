@@ -13,7 +13,7 @@ import {
   Space,
 } from "antd";
 import { appConfig, system } from "../../../api/index";
-import { UploadImageButton } from "../../../compenents";
+import { UploadImageButton } from "../../../components";
 import { useSelector, useDispatch } from "react-redux";
 import type { TabsProps } from "antd";
 import type { CheckboxChangeEvent } from "antd/es/checkbox";

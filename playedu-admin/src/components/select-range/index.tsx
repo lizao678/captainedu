@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Modal, Tabs, message } from "antd";
-import {} from "../../compenents";
+import {} from "../../components";
 import styles from "./index.module.less";
 import type { TabsProps } from "antd";
 import { SelectDepsSub } from "./select-deps-sub";

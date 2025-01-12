@@ -12,7 +12,7 @@ import {
   Select,
 } from "antd";
 import { useNavigate, useLocation } from "react-router-dom";
-import { BackBartment, DurationText } from "../../compenents";
+import { BackBartment, DurationText } from "../../components";
 import { dateFormat } from "../../utils/index";
 import { user as member } from "../../api/index";
 const { Column, ColumnGroup } = Table;

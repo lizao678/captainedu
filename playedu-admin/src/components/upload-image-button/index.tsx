@@ -14,7 +14,7 @@ import styles from "./index.module.less";
 import { CreateResourceCategory } from "../create-rs-category";
 import { CloseOutlined, CheckOutlined } from "@ant-design/icons";
 import { UploadImageSub } from "./upload-image-sub";
-import { TreeCategory } from "../../compenents";
+import { TreeCategory } from "../../components";
 
 interface Option {
   id: string | number;

@@ -21,7 +21,7 @@ import {
   SelectResource,
   SelectAttachment,
   SelectRange,
-} from "../../../compenents";
+} from "../../../components";
 import { ExclamationCircleFilled } from "@ant-design/icons";
 import { TreeHours } from "./hours";
 import { TreeAttachments } from "./attachments";

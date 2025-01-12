@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Row, Modal,  } from "antd";
 import styles from "./index.module.less";
-import { UploadVideoSub } from "../../compenents";
+import { UploadVideoSub } from "../../components";
 
 interface PropsInterface {
   defaultKeys: any[];

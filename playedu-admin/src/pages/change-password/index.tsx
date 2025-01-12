@@ -2,7 +2,7 @@ import { Row, Col, Form, Input, Button, message } from "antd";
 // import styles from "./create.module.less";
 import { login } from "../../api/index";
 import { useNavigate } from "react-router-dom";
-import { BackBartment } from "../../compenents";
+import { BackBartment } from "../../components";
 
 const ChangePasswordPage = () => {
   const navigate = useNavigate();

@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import { NoHeader } from "../../../compenents";
+import { NoHeader } from "../../../components";
 import { Suspense } from "react";
 import LoadingPage from "../../loading";
 

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import styles from "./progrss.module.less";
 import { Table, Modal, message } from "antd";
-import { PerButton, DurationText } from "../../../compenents";
+import { PerButton, DurationText } from "../../../components";
 import { user as member } from "../../../api/index";
 import type { ColumnsType } from "antd/es/table";
 import { dateFormat } from "../../../utils/index";

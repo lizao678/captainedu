@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styles from "./index.module.scss";
 import { course } from "../../api/index";
 import { Row, Col, Spin, Image, Progress } from "antd";
-import { Empty } from "../../compenents";
+import { Empty } from "../../components";
 import mediaIcon from "../../assets/images/commen/icon-medal.png";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Button, Drawer, Form, Modal, message, Spin } from "antd";
 import styles from "./hour-update.module.less";
 import { course, courseAttachment } from "../../../api/index";
-import { SelectAttachment } from "../../../compenents";
+import { SelectAttachment } from "../../../components";
 import { ExclamationCircleFilled } from "@ant-design/icons";
 import { TreeAttachments } from "./attachments";
 

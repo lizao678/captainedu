@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import styles from "./index.module.less";
 import { Outlet } from "react-router-dom";
-import { Header, LeftMenu } from "../../../compenents";
+import { Header, LeftMenu } from "../../../components";
 import { Suspense } from "react";
 import LoadingPage from "../../loading";
 

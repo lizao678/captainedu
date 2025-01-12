@@ -6,7 +6,7 @@ import backIcon from "../../assets/images/commen/icon-back-n.png";
 import { course as vod } from "../../api/index";
 import { isEmptyObject, isWechat, isIOS } from "../../utils/index";
 import { Empty } from "../../components";
-import { HourCompenent } from "./compenents/hour";
+import { HourCompenent } from "./components/hour";
 
 type LocalUserLearnHourRecordModel = {
   [key: number]: UserLearnHourRecordModel;

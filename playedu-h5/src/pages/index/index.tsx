@@ -7,7 +7,7 @@ import styles from "./index.module.scss";
 import { useSelector } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Footer, Empty } from "../../components";
-import { CoursesModel } from "./compenents/courses-model";
+import { CoursesModel } from "./components/courses-model";
 import { isEmptyObject } from "../../utils/index";
 
 type LocalUserLearnHourRecordModel = {

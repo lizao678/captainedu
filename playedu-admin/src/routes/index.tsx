@@ -3,7 +3,7 @@ import { RouteObject } from "react-router-dom";
 import { login, system } from "../api";
 
 import { getToken } from "../utils";
-import KeepAlive from "../compenents/keep-alive";
+import KeepAlive from "../components/keep-alive";
 // 页面加载
 import InitPage from "../pages/init";
 import LoginPage from "../pages/login";
@@ -47,7 +47,7 @@ const TestPage = lazy(() => import("../pages/test"));
 //错误页面
 const ErrorPage = lazy(() => import("../pages/error"));
 
-import PrivateRoute from "../compenents/private-route";
+import PrivateRoute from "../components/private-route";
 
 // const LoginPage = lazy(() => import("../pages/login"));
 

@@ -21,12 +21,12 @@ import type { MenuProps } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import { dateFormat } from "../../utils/index";
 import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
-import { TreeDepartment, TreeCategory, PerButton } from "../../compenents";
+import { TreeDepartment, TreeCategory, PerButton } from "../../components";
 import type { TabsProps } from "antd";
-import { CourseCreate } from "./compenents/create";
-import { CourseUpdate } from "./compenents/update";
-import { CourseHourUpdate } from "./compenents/hour-update";
-import { CourseAttachmentUpdate } from "./compenents/attachment-update";
+import { CourseCreate } from "./components/create";
+import { CourseUpdate } from "./components/update";
+import { CourseHourUpdate } from "./components/hour-update";
+import { CourseAttachmentUpdate } from "./components/attachment-update";
 
 const { confirm } = Modal;
 

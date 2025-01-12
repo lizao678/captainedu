@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Modal, Form, TreeSelect, Input, message, Spin } from "antd";
-import styles from "./create.module.less";
+import styles from "./update.module.less";
 import { useSelector } from "react-redux";
 import { user, department } from "../../../api/index";
-import { UploadImageButton } from "../../../compenents";
+import { UploadImageButton } from "../../../components";
 import { ValidataCredentials } from "../../../utils/index";
 
 interface PropInterface {
+  id: number;
   open: boolean;
-  depIds: any;
   onCancel: () => void;
 }
 
@@ -18,9 +18,9 @@ interface Option {
   children?: Option[];
 }
 
-export const MemberCreate: React.FC<PropInterface> = ({
+export const MemberUpdate: React.FC<PropInterface> = ({
+  id,
   open,
-  depIds,
   onCancel,
 }) => {
   const [form] = Form.useForm();
@@ -34,32 +34,54 @@ export const MemberCreate: React.FC<PropInterface> = ({
 
   useEffect(() => {
     setInit(true);
+    if (id == 0) {
+      return;
+    }
     if (open) {
       getParams();
+      form.setFieldsValue({
+        password: "",
+      });
+      getDetail();
     }
-  }, [open]);
-
-  useEffect(() => {
-    form.setFieldsValue({
-      email: "",
-      name: "",
-      password: "",
-      avatar: memberDefaultAvatar,
-      idCard: "",
-      dep_ids: depIds,
-    });
-    setAvatar(memberDefaultAvatar);
-  }, [form, open, depIds]);
+  }, [form, id, open]);
 
   const getParams = () => {
+    if (id === 0) {
+      return;
+    }
     department.departmentList({}).then((res: any) => {
       const departments = res.data.departments;
       if (JSON.stringify(departments) !== "{}") {
         const new_arr: Option[] = checkArr(departments, 0);
         setDepartments(new_arr);
       }
+    });
+  };
+
+  const getDetail = () => {
+    user.user(id).then((res: any) => {
+      let user = res.data.user;
+      setAvatar(user.avatar);
+      form.setFieldsValue({
+        email: user.email,
+        name: user.name,
+        avatar: user.avatar,
+        idCard: user.id_card,
+        dep_ids: res.data.dep_ids,
+      });
       setInit(false);
     });
+  };
+
+  const checkChild = (departments: any[], id: number) => {
+    for (let key in departments) {
+      for (let i = 0; i < departments[key].length; i++) {
+        if (departments[key][i].id === id) {
+          return departments[key][i];
+        }
+      }
+    }
   };
 
   const checkArr = (departments: any[], id: number) => {
@@ -92,11 +114,12 @@ export const MemberCreate: React.FC<PropInterface> = ({
     // }
     setLoading(true);
     user
-      .storeUser(
+      .updateUser(
+        id,
         values.email,
         values.name,
         values.avatar,
-        values.password,
+        values.password || "",
         values.idCard,
         values.dep_ids
       )
@@ -114,11 +137,13 @@ export const MemberCreate: React.FC<PropInterface> = ({
     console.log("Failed:", errorInfo);
   };
 
+  const onChange = (value: any) => {};
+
   return (
     <>
       {open ? (
         <Modal
-          title="添加学员"
+          title="编辑学员"
           centered
           forceRender
           open={true}
@@ -139,7 +164,7 @@ export const MemberCreate: React.FC<PropInterface> = ({
           >
             <Form
               form={form}
-              name="create-basic"
+              name="update-basic"
               labelCol={{ span: 7 }}
               wrapperCol={{ span: 17 }}
               initialValues={{ remember: true }}
@@ -173,7 +198,11 @@ export const MemberCreate: React.FC<PropInterface> = ({
                 name="name"
                 rules={[{ required: true, message: "请输入学员姓名!" }]}
               >
-                <Input style={{ width: 274 }} placeholder="请填写学员姓名" />
+                <Input
+                  allowClear
+                  style={{ width: 274 }}
+                  placeholder="请填写学员姓名"
+                />
               </Form.Item>
               <Form.Item
                 label="登录邮箱"
@@ -182,20 +211,16 @@ export const MemberCreate: React.FC<PropInterface> = ({
               >
                 <Input
                   autoComplete="off"
-                  allowClear
                   style={{ width: 274 }}
+                  allowClear
                   placeholder="请输入学员登录邮箱"
                 />
               </Form.Item>
-              <Form.Item
-                label="登录密码"
-                name="password"
-                rules={[{ required: true, message: "请输入登录密码!" }]}
-              >
+              <Form.Item label="登录密码" name="password">
                 <Input.Password
                   autoComplete="off"
-                  allowClear
                   style={{ width: 274 }}
+                  allowClear
                   placeholder="请输入登录密码"
                 />
               </Form.Item>

@@ -1,4 +1,4 @@
-import { UploadVideoButton } from "../../compenents/upload-video-button";
+import { UploadVideoButton } from "../../components/upload-video-button";
 
 const TestPage = () => {
   return (

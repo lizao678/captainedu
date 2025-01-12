@@ -5,11 +5,11 @@ import { PlusOutlined, ExclamationCircleFilled } from "@ant-design/icons";
 import { adminUser, adminRole } from "../../../api/index";
 import { dateFormat } from "../../../utils/index";
 import { useNavigate } from "react-router-dom";
-import { TreeAdminroles, PerButton } from "../../../compenents";
-import { SystemAdministratorCreate } from "./compenents/create";
-import { SystemAdministratorUpdate } from "./compenents/update";
-import { SystemAdminrolesCreate } from "../adminroles/compenents/create";
-import { SystemAdminrolesUpdate } from "../adminroles/compenents/update";
+import { TreeAdminroles, PerButton } from "../../../components";
+import { SystemAdministratorCreate } from "./components/create";
+import { SystemAdministratorUpdate } from "./components/update";
+import { SystemAdminrolesCreate } from "../adminroles/components/create";
+import { SystemAdminrolesUpdate } from "../adminroles/components/update";
 
 const { confirm } = Modal;
 

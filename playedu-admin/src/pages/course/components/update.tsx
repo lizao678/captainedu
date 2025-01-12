@@ -16,7 +16,7 @@ import {
 import styles from "./update.module.less";
 import { useSelector } from "react-redux";
 import { course, department } from "../../../api/index";
-import { UploadImageButton, SelectRange } from "../../../compenents";
+import { UploadImageButton, SelectRange } from "../../../components";
 import dayjs from "dayjs";
 import moment from "moment";
 

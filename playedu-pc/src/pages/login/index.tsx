@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { loginAction } from "../../store/user/loginUserSlice";
 import { login, user } from "../../api/index";
 import { setToken } from "../../utils/index";
-import { NoFooter } from "../../compenents";
+import { NoFooter } from "../../components";
 
 const LoginPage: React.FC = () => {
   const dispatch = useDispatch();

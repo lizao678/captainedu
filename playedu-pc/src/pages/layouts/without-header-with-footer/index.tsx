@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import { Footer } from "../../../compenents";
+import { Footer } from "../../../components";
 import { Suspense } from "react";
 import LoadingPage from "../../loading";
 

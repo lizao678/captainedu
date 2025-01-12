@@ -13,8 +13,8 @@ import {
 import { resource } from "../../../api";
 import { useLocation } from "react-router-dom";
 import styles from "./index.module.less";
-import { UploadImageSub } from "../../../compenents/upload-image-button/upload-image-sub";
-import { TreeCategory } from "../../../compenents";
+import { UploadImageSub } from "../../../components/upload-image-button/upload-image-sub";
+import { TreeCategory } from "../../../components";
 import { ExclamationCircleFilled, CheckOutlined } from "@ant-design/icons";
 
 const { confirm } = Modal;

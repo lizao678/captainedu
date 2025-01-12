@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import { Footer, Header } from "../../../compenents";
+import { Footer, Header } from "../../../components";
 import { Suspense } from "react";
 import LoadingPage from "../../loading";
 

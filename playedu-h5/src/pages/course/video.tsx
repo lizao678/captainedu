@@ -6,7 +6,7 @@ import { course as Course } from "../../api/index";
 import { Toast, Image } from "antd-mobile";
 import backIcon from "../../assets/images/commen/icon-back-n.png";
 import { Empty } from "../../components";
-import { HourCompenent } from "./compenents/videoHour";
+import { HourCompenent } from "./components/videoHour";
 
 declare const window: any;
 

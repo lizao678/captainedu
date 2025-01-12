@@ -20,7 +20,7 @@ const LatestLearnPage = lazy(() => import("../pages/latest-learn"));
 //错误页面
 const ErrorPage = lazy(() => import("../pages/error"));
 
-import PrivateRoute from "../compenents/private-route";
+import PrivateRoute from "../components/private-route";
 
 let RootPage: any = null;
 if (getToken()) {
