@@ -19,8 +19,8 @@ volumes:
 
 services:
   playedu:
-    # build: .
-    image: crpi-xfapgauq9u8jmo86.cn-shanghai.personal.cr.aliyuncs.com/captainedu/playedu:1.0
+    build: .
+    # image: crpi-xfapgauq9u8jmo86.cn-shanghai.personal.cr.aliyuncs.com/captainedu/playedu:1.0
     restart: always
     environment:
       - DB_HOST=mysql
@@ -54,8 +54,8 @@ services:
     restart: always
     volumes:
       - redis-data:/data
-    # ports:
-    #   - "${REDIS_PORT:-6379}:6379"
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
     networks:
       - playedu
     logging: *default-logging
@@ -69,8 +69,8 @@ services:
       - TZ=UTC
     volumes:
       - mysql-data:/var/lib/mysql
-    # ports:
-    #   - "${MYSQL_PORT:-3306}:3306"
+    ports:
+      - "${MYSQL_PORT:-3306}:3306"
     networks:
       - playedu
     logging: *default-logging
