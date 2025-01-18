@@ -82,6 +82,17 @@ services:
       - MINIO_ROOT_USER=${MINIO_ROOT_USERNAME:-username}
       - MINIO_ROOT_PASSWORD=${MINIO_ROOT_PASSWORD:-password}
       - MINIO_DEFAULT_BUCKETS=playedu:public
+      - MINIO_BROWSER_REDIRECT_URL=http://localhost:50002
+      # 性能调优
+      - MINIO_API_REQUESTS_MAX=1000
+      - MINIO_API_REQUESTS_DEADLINE=10m
+      - MINIO_COMPRESS=true
+      - MINIO_COMPRESS_EXTENSIONS=.txt,.log,.csv
+      - MINIO_COMPRESS_MIME_TYPES=text/*,application/json
+      # 并发和缓存
+      - MINIO_READ_WRITE_TIMEOUT=1h
+      - MINIO_CACHE_SIZE=1G
+      - MINIO_CACHE_EXPIRY=72h
     volumes:
       - minio-data:/bitnami/minio/data
     ports:

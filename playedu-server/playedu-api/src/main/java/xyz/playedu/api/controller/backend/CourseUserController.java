@@ -162,19 +162,15 @@ public class CourseUserController {
         if (req.getIds().size() == 0) {
             return JsonResponse.error("请选择需要删除的数据");
         }
-        List<UserCourseRecord> records =
-                userCourseRecordService.chunks(
-                        req.getIds(),
-                        new ArrayList<>() {
-                            {
-                                add("user_id");
-                                add("id");
-                            }
-                        });
-        for (UserCourseRecord record : records) {
-            userCourseRecordService.removeById(record);
-            ctx.publishEvent(new UserCourseRecordDestroyEvent(this, record.getUserId(), courseId));
+        
+        for (Integer userId : req.getIds()) {
+            UserCourseRecord record = userCourseRecordService.find(userId, courseId);
+            if (record != null) {
+                userCourseRecordService.removeById(record);
+                ctx.publishEvent(new UserCourseRecordDestroyEvent(this, userId, courseId));
+            }
         }
+        
         return JsonResponse.success();
     }
 }

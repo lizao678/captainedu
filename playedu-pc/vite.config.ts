@@ -8,6 +8,14 @@ export default defineConfig({
   server: {
     host: "0.0.0.0",
     port: 9797,
+    proxy: {
+        '/api': {
+          target: 'http://127.0.0.1:9898',  // 后端 API 地址
+          changeOrigin: true,
+          secure: false,
+        //   rewrite: (path) => path.replace(/^\/backend/, '/api')
+        },
+      },
   },
   plugins: [
     react(),
