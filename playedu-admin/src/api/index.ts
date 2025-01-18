@@ -1,17 +1,39 @@
-export * as login from "./login";
-export * as system from "./system";
-export * as adminRole from "./admin-role";
-export * as adminUser from "./admin-user";
-export * as courseCategory from "./course-category";
-export * as courseChapter from "./course-chapter";
-export * as course from "./course";
-export * as courseHour from "./course-hour";
-export * as courseAttachment from "./course-attachment";
-export * as department from "./department";
-export * as resourceCategory from "./resource-category";
-export * as resource from "./resource";
-export * as upload from "./upload";
-export * as user from "./user";
-export * as appConfig from "./app-config";
-export * as dashboard from "./dashboard";
-export * as adminLog from "./admin-log";
+import * as login from "./login";
+import * as system from "./system";
+import * as adminRole from "./admin-role";
+import * as adminUser from "./admin-user";
+import * as courseCategory from "./course-category";
+import * as courseChapter from "./course-chapter";
+import * as course from "./course";
+import * as courseHour from "./course-hour";
+import * as courseAttachment from "./course-attachment";
+import * as department from "./department";
+import * as resourceCategory from "./resource-category";
+import * as resource from "./resource";
+import * as upload from "./upload";
+import * as user from "./user";
+import * as appConfig from "./app-config";
+import * as dashboard from "./dashboard";
+import * as adminLog from "./admin-log";
+import * as live from "./live";
+
+export { 
+  login, 
+  system, 
+  resource, 
+  resourceCategory, 
+  course, 
+  user, 
+  department, 
+  live,
+  adminRole,
+  adminUser,
+  courseCategory,
+  courseChapter,
+  courseHour,
+  courseAttachment,
+  upload,
+  appConfig,
+  dashboard,
+  adminLog
+};

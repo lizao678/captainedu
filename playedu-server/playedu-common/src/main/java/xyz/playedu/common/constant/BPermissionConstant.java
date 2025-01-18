@@ -57,4 +57,11 @@ public class BPermissionConstant {
     public static final String DATA_USER_NAME = "data-user-name";
     public static final String DATA_USER_EMAIL = "data-user-email";
     public static final String DATA_ADMIN_EMAIL = "data-admin-email";
+
+    public static final String LIVE = "live";
+    public static final String LIVE_STORE = "live-store";
+    public static final String LIVE_UPDATE = "live-update";
+    public static final String LIVE_DESTROY = "live-destroy";
+    public static final String LIVE_START = "live-start";
+    public static final String LIVE_END = "live-end";
 }

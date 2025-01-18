@@ -71,3 +71,18 @@ playedu:
   limiter:
     duration: 60
     limit: 360
+
+# SRS流媒体服务器配置
+srs:
+  rtmp:
+    # 本地测试使用127.0.0.1或本机局域网IP
+    # TODO: 部署生产环境时替换为公网IP
+    server: rtmp://127.0.0.1:1935
+  api:
+    # 本地测试使用127.0.0.1或本机局域网IP
+    # TODO: 部署生产环境时替换为公网IP
+    server: http://127.0.0.1:8080
+  webrtc:
+    # 本地测试使用127.0.0.1或本机局域网IP
+    # TODO: 部署生产环境时替换为公网IP
+    server: webrtc://127.0.0.1:8000

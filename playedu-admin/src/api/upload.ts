@@ -1,10 +1,17 @@
 import client from "./internal/httpClient";
 
+export function uploadImage(file: File) {
+  const formData = new FormData();
+  formData.append("file", file);
+  return client.post("/backend/v1/upload/image", formData);
+}
+
 export function minioUploadId(extension: string) {
   return client.get("/backend/v1/upload/minio/upload-id", {
     extension,
   });
 }
+
 export function minioPreSignUrl(
   uploadId: string,
   filename: string,

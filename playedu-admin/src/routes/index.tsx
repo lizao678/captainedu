@@ -26,6 +26,11 @@ const ResourceCoursewarePage = lazy(
 //课程相关
 const CoursePage = lazy(() => import("../pages/course/index"));
 const CourseUserPage = lazy(() => import("../pages/course/user"));
+//直播相关
+const LivePage = lazy(() => import("../pages/live/index"));
+const LiveCreatePage = lazy(() => import("../pages/live/create"));
+const LiveUpdatePage = lazy(() => import("../pages/live/update"));
+const LiveDetailPage = lazy(() => import("../pages/live/detail"));
 //学员相关
 const MemberPage = lazy(() => import("../pages/member"));
 const MemberImportPage = lazy(() => import("../pages/member/import"));
@@ -116,6 +121,22 @@ const routes: RouteObject[] = [
           {
             path: "/course/user/:courseId",
             element: <PrivateRoute Component={<CourseUserPage />} />,
+          },
+          {
+            path: "/live",
+            element: <PrivateRoute Component={<LivePage />} />,
+          },
+          {
+            path: "/live/create",
+            element: <PrivateRoute Component={<LiveCreatePage />} />,
+          },
+          {
+            path: "/live/update",
+            element: <PrivateRoute Component={<LiveUpdatePage />} />,
+          },
+          {
+            path: "/live/detail",
+            element: <PrivateRoute Component={<LiveDetailPage />} />,
           },
           {
             path: "/member",

@@ -1,0 +1,36 @@
+# 此文件仅用于本地开发环境，启动 SRS 流媒体服务
+# 生产环境部署请使用根目录下的 docker-compose.yml
+version: '3'
+services:
+  # 注释掉后端服务配置，本地开发时使用 IDE 或命令行直接运行后端
+  # api:
+  #   build:
+  #     context: ..
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "9898:9898"
+  #   networks:
+  #     - playedu-network
+
+  # 只保留 SRS 流媒体服务
+  srs:
+    image: ossrs/srs:5
+    container_name: playedu-srs
+    ports:
+      - "1935:1935"  # RTMP推流端口
+      - "1985:1985"  # HTTP API端口
+      - "8080:8080"  # HTTP服务端口
+      - "8000:8000/udp"  # WebRTC端口
+    volumes:
+      - ./srs/srs.conf:/usr/local/srs/conf/srs.conf
+    environment:
+      # 本地测试使用127.0.0.1或本机局域网IP
+      # TODO: 部署生产环境时替换为公网IP
+      CANDIDATE: "127.0.0.1"
+    restart: always
+    networks:
+      - playedu-network
+
+networks:
+  playedu-network:
+    driver: bridge 

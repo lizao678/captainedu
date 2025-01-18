@@ -60,6 +60,14 @@ const items = [
     null
   ),
   getItem(
+    "直播管理",
+    "live",
+    <i className="iconfont icon-icon-live" />,
+    [getItem("直播列表", "/live", null, null, null, "live")],
+    null,
+    null
+  ),
+  getItem(
     "学员管理",
     "user",
     <i className="iconfont icon-icon-user" />,
