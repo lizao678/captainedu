@@ -62,7 +62,7 @@ const items = [
   getItem(
     "直播管理",
     "live",
-    <i className="iconfont icon-icon-live" />,
+    <i className="iconfont icon-icon-video" />,
     [getItem("直播列表", "/live", null, null, null, "live")],
     null,
     null

@@ -38,8 +38,10 @@ interface DataType {
   flvUrl: string;
   hlsUrl: string;
   webrtcUrl: string;
+  description: string;
   viewerCount: number;
   peakViewerCount: number;
+  coverImage: string;
 }
 
 interface ActionItem {
@@ -320,37 +322,53 @@ const LivePage = () => {
         width={800}
       >
         {currentLive && (
-          <Descriptions column={1} bordered>
-            <Descriptions.Item label="直播标题">{currentLive.title}</Descriptions.Item>
-            <Descriptions.Item label="状态">
-              <Tag color={STATUS_CONFIG[currentLive.status].color}>
-                {STATUS_CONFIG[currentLive.status].text}
-              </Tag>
-            </Descriptions.Item>
-            {currentLive.status === LIVE_STATUS.NOT_STARTED && (
-              <>
-                <Descriptions.Item label="推流密钥">{currentLive.streamKey}</Descriptions.Item>
-                <Descriptions.Item label="推流地址">{currentLive.rtmpUrl}</Descriptions.Item>
-              </>
-            )}
-            {currentLive.status === LIVE_STATUS.LIVING && (
-              <>
-                <Descriptions.Item label="FLV播放地址">{currentLive.flvUrl}</Descriptions.Item>
-                <Descriptions.Item label="HLS播放地址">{currentLive.hlsUrl}</Descriptions.Item>
-                <Descriptions.Item label="WebRTC播放地址">{currentLive.webrtcUrl}</Descriptions.Item>
-              </>
-            )}
-            <Descriptions.Item label="观看人数">
-              {currentLive.viewerCount} / {currentLive.peakViewerCount}（当前/最高）
-            </Descriptions.Item>
-            <Descriptions.Item label="计划开始时间">{dateFormat(currentLive.plannedStartTime)}</Descriptions.Item>
-            <Descriptions.Item label="实际开始时间">
-              {currentLive.actualStartTime ? dateFormat(currentLive.actualStartTime) : "-"}
-            </Descriptions.Item>
-            <Descriptions.Item label="实际结束时间">
-              {currentLive.actualEndTime ? dateFormat(currentLive.actualEndTime) : "-"}
-            </Descriptions.Item>
-          </Descriptions>
+          <div style={{ display: 'flex', gap: '20px' }}>
+            <Descriptions column={1} bordered style={{ flex: 1 }}>
+              <Descriptions.Item label="直播标题">{currentLive.title}</Descriptions.Item>
+              <Descriptions.Item label="状态">
+                <Tag color={STATUS_CONFIG[currentLive.status].color}>
+                  {STATUS_CONFIG[currentLive.status].text}
+                </Tag>
+              </Descriptions.Item>
+              <Descriptions.Item label="直播简介">{currentLive.description}</Descriptions.Item>
+              {currentLive.status === LIVE_STATUS.NOT_STARTED && (
+                <>
+                  <Descriptions.Item label="推流密钥">{currentLive.streamKey}</Descriptions.Item>
+                  <Descriptions.Item label="推流地址">{currentLive.rtmpUrl}</Descriptions.Item>
+                </>
+              )}
+              {currentLive.status === LIVE_STATUS.LIVING && (
+                <>
+                  <Descriptions.Item label="推流密钥">{currentLive.streamKey}</Descriptions.Item>
+                  <Descriptions.Item label="推流地址">{currentLive.rtmpUrl}</Descriptions.Item>
+                  <Descriptions.Item label="FLV播放地址">{currentLive.flvUrl}</Descriptions.Item>
+                  <Descriptions.Item label="HLS播放地址">{currentLive.hlsUrl}</Descriptions.Item>
+                  <Descriptions.Item label="WebRTC播放地址">{currentLive.webrtcUrl}</Descriptions.Item>
+                </>
+              )}
+              <Descriptions.Item label="观看人数">
+                {currentLive.viewerCount} / {currentLive.peakViewerCount}（当前/最高）
+              </Descriptions.Item>
+              <Descriptions.Item label="计划开始时间">{dateFormat(currentLive.plannedStartTime)}</Descriptions.Item>
+              <Descriptions.Item label="实际开始时间">
+                {currentLive.actualStartTime ? dateFormat(currentLive.actualStartTime) : "-"}
+              </Descriptions.Item>
+              <Descriptions.Item label="实际结束时间">
+                {currentLive.actualEndTime ? dateFormat(currentLive.actualEndTime) : "-"}
+              </Descriptions.Item>
+            </Descriptions>
+            <div style={{ width: '200px' }}>
+              <img 
+                src={currentLive.coverImage} 
+                alt="直播封面" 
+                style={{ 
+                  width: '100%', 
+                  borderRadius: '4px',
+                  boxShadow: '0 2px 8px rgba(0,0,0,0.15)'
+                }} 
+              />
+            </div>
+          </div>
         )}
       </Modal>
     </div>
