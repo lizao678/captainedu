@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import { Table, Button, Space, Modal, message, Tag, Descriptions } from "antd";
+import { Table, Button, Space, Modal, message, Tag, Descriptions, Dropdown } from "antd";
 import type { ColumnsType } from "antd/es/table";
-import { ExclamationCircleFilled } from "@ant-design/icons";
+import { ExclamationCircleFilled, MoreOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { live } from "../../api/index";
 import { dateFormat } from "../../utils/index";
@@ -9,10 +9,26 @@ import { PerButton } from "../../components";
 
 const { confirm } = Modal;
 
+// 直播状态常量
+const LIVE_STATUS = {
+  NOT_STARTED: 0,
+  LIVING: 1,
+  ENDED: 2,
+} as const;
+
+type LiveStatus = typeof LIVE_STATUS[keyof typeof LIVE_STATUS];
+
+// 状态显示配置
+const STATUS_CONFIG: Record<LiveStatus, { text: string; color: string }> = {
+  [LIVE_STATUS.NOT_STARTED]: { text: "未开始", color: "default" },
+  [LIVE_STATUS.LIVING]: { text: "直播中", color: "processing" },
+  [LIVE_STATUS.ENDED]: { text: "已结束", color: "success" },
+};
+
 interface DataType {
   id: number;
   title: string;
-  status: number;
+  status: LiveStatus;
   plannedStartTime: string;
   actualStartTime: string;
   actualEndTime: string;
@@ -26,15 +42,25 @@ interface DataType {
   peakViewerCount: number;
 }
 
+interface ActionItem {
+  key: string;
+  label: string;
+  onClick: () => void;
+  disabled: boolean;
+  permission: string;
+  danger?: boolean;
+}
+
 const LivePage = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState<boolean>(false);
-  const [list, setList] = useState<any>([]);
+  const [list, setList] = useState<DataType[]>([]);
   const [page, setPage] = useState(1);
   const [size, setSize] = useState(10);
   const [total, setTotal] = useState(0);
   const [showDetailModal, setShowDetailModal] = useState(false);
   const [currentLive, setCurrentLive] = useState<DataType | null>(null);
+  const [operatingId, setOperatingId] = useState<number | null>(null);
 
   useEffect(() => {
     getData();
@@ -51,10 +77,11 @@ const LivePage = () => {
       .then((res: any) => {
         setList(res.data.data);
         setTotal(res.data.total);
-        setLoading(false);
       })
       .catch((err) => {
         console.error("获取直播列表失败", err);
+      })
+      .finally(() => {
         setLoading(false);
       });
   };
@@ -64,121 +91,25 @@ const LivePage = () => {
     setShowDetailModal(true);
   };
 
-  const columns: ColumnsType<DataType> = [
-    {
-      title: "ID",
-      dataIndex: "id",
-      render: (text: string) => <span>{text}</span>,
-    },
-    {
-      title: "直播标题",
-      dataIndex: "title",
-      render: (text: string) => <span>{text}</span>,
-    },
-    {
-      title: "状态",
-      dataIndex: "status",
-      render: (status: number) => (
-        <Tag color={status === 0 ? "default" : status === 1 ? "processing" : "success"}>
-          {status === 0 ? "未开始" : status === 1 ? "直播中" : "已结束"}
-        </Tag>
-      ),
-    },
-    {
-      title: "观看人数",
-      dataIndex: "viewerCount",
-      render: (count: number, record: DataType) => (
-        <span>{count} / {record.peakViewerCount}（当前/最高）</span>
-      ),
-    },
-    {
-      title: "计划开始时间",
-      dataIndex: "plannedStartTime",
-      render: (text: string) => <span>{dateFormat(text)}</span>,
-    },
-    {
-      title: "实际开始时间",
-      dataIndex: "actualStartTime",
-      render: (text: string) => <span>{text ? dateFormat(text) : "-"}</span>,
-    },
-    {
-      title: "实际结束时间",
-      dataIndex: "actualEndTime",
-      render: (text: string) => <span>{text ? dateFormat(text) : "-"}</span>,
-    },
-    {
-      title: "创建时间",
-      dataIndex: "createdAt",
-      render: (text: string) => <span>{dateFormat(text)}</span>,
-    },
-    {
-      title: "操作",
-      key: "action",
-      fixed: "right",
-      width: 300,
-      render: (_, record) => (
-        <Space split={<div className="divider" />}>
-          <PerButton
-            type="link"
-            text="编辑"
-            class="c-primary"
-            icon={null}
-            p="live.update"
-            onClick={() => {
-              navigate("/live/update?id=" + record.id);
-            }}
-            disabled={false}
-          />
-          <PerButton
-            type="link"
-            text="查看"
-            class="c-primary"
-            icon={null}
-            p="live"
-            onClick={() => showDetail(record)}
-            disabled={false}
-          />
-          {record.status === 0 && (
-            <PerButton
-              type="link"
-              text="开始"
-              class="c-primary"
-              icon={null}
-              p="live.start"
-              onClick={() => {
-                startLive(record.id);
-              }}
-              disabled={false}
-            />
-          )}
-          {record.status === 1 && (
-            <PerButton
-              type="link"
-              text="结束"
-              class="c-red"
-              icon={null}
-              p="live.end"
-              onClick={() => {
-                endLive(record.id);
-              }}
-              disabled={false}
-            />
-          )}
-          <PerButton
-            type="link"
-            text="删除"
-            class="c-red"
-            icon={null}
-            p="live.destroy"
-            onClick={() => {
-              destory(record.id);
-            }}
-            disabled={false}
-          />
-        </Space>
-      ),
-    },
-  ];
+  const handleOperation = (
+    id: number,
+    operation: () => Promise<any>,
+    successMessage: string
+  ) => {
+    if (operatingId !== null) return;
+    setOperatingId(id);
+    operation()
+      .then(() => {
+        message.success(successMessage);
+        getData();
+      })
+      .catch((err) => {
+        console.error("操作失败", err);
+      })
+      .finally(() => {
+        setOperatingId(null);
+      });
+  };
 
   const destory = (id: number) => {
     confirm({
@@ -189,20 +120,7 @@ const LivePage = () => {
       okText: "确认",
       cancelText: "取消",
       onOk() {
-        if (loading) return;
-        setLoading(true);
-        live
-          .destroy(id)
-          .then(() => {
-            message.success("删除成功");
-            getData();
-          })
-          .catch((err) => {
-            console.error("删除直播失败", err);
-          })
-          .finally(() => {
-            setLoading(false);
-          });
+        handleOperation(id, () => live.destroy(id), "删除成功");
       },
     });
   };
@@ -216,20 +134,7 @@ const LivePage = () => {
       okText: "确认",
       cancelText: "取消",
       onOk() {
-        if (loading) return;
-        setLoading(true);
-        live
-          .startLive(id)
-          .then(() => {
-            message.success("开始直播成功");
-            getData();
-          })
-          .catch((err) => {
-            console.error("开始直播失败", err);
-          })
-          .finally(() => {
-            setLoading(false);
-          });
+        handleOperation(id, () => live.startLive(id), "开始直播成功");
       },
     });
   };
@@ -243,23 +148,135 @@ const LivePage = () => {
       okText: "确认",
       cancelText: "取消",
       onOk() {
-        if (loading) return;
-        setLoading(true);
-        live
-          .endLive(id)
-          .then(() => {
-            message.success("结束直播成功");
-            getData();
-          })
-          .catch((err) => {
-            console.error("结束直播失败", err);
-          })
-          .finally(() => {
-            setLoading(false);
-          });
+        handleOperation(id, () => live.endLive(id), "结束直播成功");
       },
     });
   };
+
+  const columns: ColumnsType<DataType> = [
+    {
+      title: "ID",
+      dataIndex: "id",
+      width: 80,
+      render: (text: string) => <span>{text}</span>,
+    },
+    {
+      title: "直播标题",
+      width: 250,
+      dataIndex: "title",
+      render: (text: string) => <span>{text}</span>,
+    },
+    {
+      title: "状态",
+      dataIndex: "status",
+      width: 100,
+      render: (status: LiveStatus) => {
+        const config = STATUS_CONFIG[status];
+        return <Tag color={config.color}>{config.text}</Tag>;
+      },
+    },
+    {
+      title: "观看人数",
+      dataIndex: "viewerCount",
+      width: 150,
+      render: (count: number, record: DataType) => (
+        <span>{count} / {record.peakViewerCount}（当前/最高）</span>
+      ),
+    },
+    {
+      title: "计划开始时间",
+      dataIndex: "plannedStartTime",
+      width: 180,
+      render: (text: string) => <span>{dateFormat(text)}</span>,
+    },
+    {
+      title: "实际开始时间",
+      dataIndex: "actualStartTime",
+      width: 180,
+      render: (text: string) => <span>{text ? dateFormat(text) : "-"}</span>,
+    },
+    {
+      title: "实际结束时间",
+      dataIndex: "actualEndTime",
+      width: 180,
+      render: (text: string) => <span>{text ? dateFormat(text) : "-"}</span>,
+    },
+    {
+      title: "创建时间",
+      dataIndex: "createdAt",
+      width: 180,
+      render: (text: string) => <span>{dateFormat(text)}</span>,
+    },
+    {
+      title: "操作",
+      key: "action",
+      fixed: "right",
+      width: 80,
+      render: (_, record) => {
+        const items = [
+          {
+            key: 'edit',
+            label: '编辑',
+            onClick: () => navigate("/live/update?id=" + record.id),
+            disabled: operatingId === record.id,
+            permission: 'live.update'
+          },
+          {
+            key: 'view',
+            label: '查看',
+            onClick: () => showDetail(record),
+            disabled: operatingId === record.id,
+            permission: 'live'
+          }
+        ];
+
+        if (record.status === LIVE_STATUS.NOT_STARTED) {
+          items.push({
+            key: 'start',
+            label: '开始',
+            onClick: () => startLive(record.id),
+            disabled: operatingId === record.id,
+            permission: 'live.start'
+          });
+        }
+
+        if (record.status === LIVE_STATUS.LIVING) {
+          items.push({
+            key: 'end',
+            label: '结束',
+            onClick: () => endLive(record.id),
+            disabled: operatingId === record.id,
+            permission: 'live.end'
+          });
+        }
+
+        items.push({
+          key: 'delete',
+          label: '删除',
+          onClick: () => destory(record.id),
+          disabled: operatingId === record.id,
+          permission: 'live.destroy'
+        });
+
+        return (
+          <Space>
+            {items.map((item) => (
+              <PerButton
+                key={item.key}
+                type="link"
+                text={item.label}
+                class={item.key === 'delete' ? "c-red" : "c-primary"}
+                icon={null}
+                p={item.permission}
+                onClick={item.onClick}
+                disabled={item.disabled}
+              />
+            ))}
+          </Space>
+        );
+      },
+    },
+  ];
 
   return (
     <div className="meedu-main-body">
@@ -306,17 +323,17 @@ const LivePage = () => {
           <Descriptions column={1} bordered>
             <Descriptions.Item label="直播标题">{currentLive.title}</Descriptions.Item>
             <Descriptions.Item label="状态">
-              <Tag color={currentLive.status === 0 ? "default" : currentLive.status === 1 ? "processing" : "success"}>
-                {currentLive.status === 0 ? "未开始" : currentLive.status === 1 ? "直播中" : "已结束"}
+              <Tag color={STATUS_CONFIG[currentLive.status].color}>
+                {STATUS_CONFIG[currentLive.status].text}
               </Tag>
             </Descriptions.Item>
-            {currentLive.status === 0 && (
+            {currentLive.status === LIVE_STATUS.NOT_STARTED && (
               <>
                 <Descriptions.Item label="推流密钥">{currentLive.streamKey}</Descriptions.Item>
                 <Descriptions.Item label="推流地址">{currentLive.rtmpUrl}</Descriptions.Item>
               </>
             )}
-            {currentLive.status === 1 && (
+            {currentLive.status === LIVE_STATUS.LIVING && (
               <>
                 <Descriptions.Item label="FLV播放地址">{currentLive.flvUrl}</Descriptions.Item>
                 <Descriptions.Item label="HLS播放地址">{currentLive.hlsUrl}</Descriptions.Item>
