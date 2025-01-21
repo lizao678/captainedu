@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Test Live</title>
+</head>
+
+<body>
+    <h1>Test Live</h1>
+    <script src="https://cdn.jsdelivr.net/npm/flv.js@latest"></script>
+    <video id="videoElement" controls></video>
+    <script>
+        if (flvjs.isSupported()) {
+            const videoElement = document.getElementById('videoElement');
+            const flvPlayer = flvjs.createPlayer({
+                type: 'flv',
+                url: 'http://127.0.0.1:8080/live/c0b975b43ac74a1bba6f1d33eca3a6ed.flv',
+            });
+            flvPlayer.attachMediaElement(videoElement);
+            flvPlayer.load();
+            flvPlayer.play();
+        }
+    </script>
+</body>
+
+</html>

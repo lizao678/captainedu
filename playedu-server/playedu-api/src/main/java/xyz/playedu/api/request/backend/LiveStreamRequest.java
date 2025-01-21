@@ -8,7 +8,6 @@ public class LiveStreamRequest {
     @NotBlank(message = "直播标题不能为空")
     private String title;
 
-    @NotBlank(message = "直播简介不能为空")
     private String description;
 
     private String coverImage;
